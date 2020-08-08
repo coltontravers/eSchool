@@ -1,9 +1,22 @@
 import React, { FunctionComponent } from "react";
-import GridTypes from "./gridTypes";
-import { StyledGrid } from "./Grid.styled";
+import tw from "twin.macro";
+import GridTypes from "./grid.types";
 
-const Grid: FunctionComponent<GridTypes> = ({ children, ...restProps }) => {
-    return <StyledGrid {...restProps}>{children}</StyledGrid>;
-};
+const Grid: FunctionComponent<GridTypes> = ({
+    columns,
+    rows,
+    gridGap,
+    children
+}) => (
+    <div
+        css={[
+            columns && tw`grid-cols-${columns}`,
+            rows && tw`grid-rows-${rows}`,
+            gridGap && tw`gap-${gridGap}`
+        ]}
+    >
+        {children}
+    </div>
+);
 
 export default Grid;

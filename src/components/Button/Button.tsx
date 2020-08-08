@@ -52,13 +52,14 @@ export const Button: FunctionComponent<ButtonTypes> = ({
     icon,
     iconPlacement,
     children,
+    className,
     ...restProps
 }) => {
     return (
         <button
             type="button"
             css={[
-                tw`text-white font-bold`,
+                tw`text-white font-bold focus:outline-none`,
                 round && tw`rounded`,
                 (disabled || isLoading) && tw`opacity-50 cursor-default`,
                 fullWidth && tw`w-full`,
@@ -67,6 +68,7 @@ export const Button: FunctionComponent<ButtonTypes> = ({
                 svgStyles
             ]}
             disabled={disabled}
+            className={className}
             {...restProps}
         >
             {generateButtonChildren({

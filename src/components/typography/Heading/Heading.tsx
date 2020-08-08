@@ -1,18 +1,11 @@
 import React, { FunctionComponent } from "react";
-import headingTypes, { defaultProps, componentVariants } from "./headingTypes";
+import headingTypes, { defaultProps, componentVariants } from "./heading.types";
 import { StyledHeading } from "./Heading.styled";
 
 const Heading: FunctionComponent<headingTypes> = ({
     variant = "h3",
-    children,
     ...restProps
-}) => {
-    return (
-        <StyledHeading component={componentVariants[variant]} {...restProps}>
-            {children}
-        </StyledHeading>
-    );
-};
+}) => <StyledHeading component={componentVariants[variant]} {...restProps} />;
 
 Heading.defaultProps = defaultProps;
 

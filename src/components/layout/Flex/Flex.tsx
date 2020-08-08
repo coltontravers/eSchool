@@ -1,13 +1,35 @@
 import React, { FunctionComponent } from "react";
-import FlexTypes, { defaultProps } from "./flexTypes";
-import { StyledFlex } from "./Flex.styled";
+import tw from "twin.macro";
+import FlexTypes, {
+    defaultProps,
+    alignContent as alignContentTypes,
+    alignItems as alignItemsTypes,
+    flexDirections,
+    flexWrap,
+    justify as justifyTypes
+} from "./flex.types";
 
 export const Flex: FunctionComponent<FlexTypes> = ({
-    children,
-    ...restProps
-}) => {
-    return <StyledFlex {...restProps}>{children}</StyledFlex>;
-};
+    direction,
+    alignItems,
+    alignContent,
+    justify,
+    wrap,
+    children
+}) => (
+    <div
+        css={[
+            tw`flex`,
+            direction && flexDirections[direction],
+            alignItems && alignItemsTypes[alignItems],
+            alignContent && alignContentTypes[alignContent],
+            justify && justifyTypes[justify],
+            wrap && flexWrap[wrap]
+        ]}
+    >
+        {children}
+    </div>
+);
 
 Flex.defaultProps = defaultProps;
 

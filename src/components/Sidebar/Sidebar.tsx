@@ -1,115 +1,45 @@
-import React, { FunctionComponent, useState, useContext } from "react";
-import {
-    Movie,
-    Tv,
-    Home,
-    ArrowFromRight,
-    ArrowFromLeft
-} from "@styled-icons/boxicons-regular";
-import { SettingsOutline } from "@styled-icons/evaicons-outline";
-import browerStorageKeys from "../../constants/browserStorage";
-import {
-    StyledSidebar,
-    StyledLibrary,
-    StyledBottom,
-    StyledButton,
-    StyledFooter
-} from "./Sidebar.styled";
-import Button from "../Button/Button";
-import convertStringToBoolean from "../../helpers/convertStringToBoolean";
-import AppContext from "../../state/AppState";
+import React, { FunctionComponent, useState } from "react";
+import tw from "twin.macro";
+import { StyledButton } from "./Sidebar.styled";
 
-const onToggleSidebarClick = (
-    isOpen: boolean,
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-    const toggledState = !isOpen;
-
-    localStorage.setItem(
-        browerStorageKeys.sidebar.open,
-        toggledState.toString()
-    );
-
-    setIsOpen(toggledState);
-};
+const buttonMap = [
+    "Dashboard",
+    "Classes",
+    "Assignments",
+    "Groups",
+    "Messages",
+    "Gradebook",
+    "Calendar"
+];
 
 export const Sidebar: FunctionComponent = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(
-        convertStringToBoolean(
-            localStorage.getItem(browerStorageKeys.sidebar.open)
-        )
-    );
-
-    const { state } = useContext(AppContext);
+    const [activeButton, setActiveButton] = useState(0);
 
     return (
-        <StyledSidebar isOpen={isOpen} state={state}>
-            <StyledLibrary>
-                <StyledButton
-                    background="transparent"
-                    fullWidth
-                    weight="extraBold"
-                    isActive
-                    icon={<Home />}
-                >
-                    {isOpen && "Home"}
-                </StyledButton>
-                <StyledButton
-                    background="transparent"
-                    fullWidth
-                    weight="extraBold"
-                    icon={<Movie />}
-                >
-                    {isOpen && "Movies"}
-                </StyledButton>
-                <StyledButton
-                    background="transparent"
-                    fullWidth
-                    weight="extraBold"
-                    icon={<Tv />}
-                >
-                    {isOpen && "Tv Shows"}
-                </StyledButton>
-            </StyledLibrary>
-            <StyledBottom>
-                <Button background="transparent" fullWidth weight="bold">
-                    Recently Played
-                </Button>
-                <Button background="transparent" fullWidth weight="bold">
-                    Playlists
-                </Button>
-                <Button background="transparent" fullWidth weight="bold">
-                    Recommended
-                </Button>
+        <div
+            css={[
+                tw`w-1/6 bg-primary-normal overflow-hidden items-center flex flex-col pt-double`
+            ]}
+        >
+            {buttonMap.map((button, index) => {
+                const isActive = index === activeButton;
 
-                <StyledFooter>
-                    <Button background="transparent" hoverShadow={false}>
-                        <SettingsOutline size="35" />
-                    </Button>
-                    {isOpen ? (
-                        <Button
-                            onClick={() =>
-                                onToggleSidebarClick(isOpen, setIsOpen)
-                            }
-                            background="transparent"
-                            hoverShadow={false}
-                        >
-                            <ArrowFromRight size="35" />
-                        </Button>
-                    ) : (
-                        <Button
-                            onClick={() =>
-                                onToggleSidebarClick(isOpen, setIsOpen)
-                            }
-                            background="transparent"
-                            hoverShadow={false}
-                        >
-                            <ArrowFromLeft size="35" />
-                        </Button>
-                    )}
-                </StyledFooter>
-            </StyledBottom>
-        </StyledSidebar>
+                return (
+                    <StyledButton
+                        css={[
+                            tw`w-10/12 rounded-full bg-primary-normal my-oneThird hover:text-gray-dark hover:bg-white`,
+                            isActive && tw`bg-white text-gray-dark`
+                        ]}
+                        onClick={() => setActiveButton(index)}
+                        size="large"
+                        active={isActive}
+                        key={`sidebar-nav-${button}`}
+                    >
+                        {button}
+                    </StyledButton>
+                );
+            })}
+        </div>
     );
 };
 

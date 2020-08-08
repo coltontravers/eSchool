@@ -5,8 +5,6 @@ const styles = {
     ...primary
 };
 
-console.log(styles);
-
 const GlobalStyles = createGlobalStyle`
     ${Object.keys(styles).map((key) => styles[key as keyof typeof styles])}
 `;

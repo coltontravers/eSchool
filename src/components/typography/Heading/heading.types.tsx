@@ -1,5 +1,7 @@
 import React from "react";
-import TextTypes, { defaultProps as defaultTextProps } from "../Text/textTypes";
+import TextTypes, {
+    defaultProps as defaultTextProps
+} from "../Text/text.types";
 
 /* eslint-disable jsx-a11y/heading-has-content */
 export const componentVariants = {
