@@ -1,19 +1,41 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
+import { useHistory } from "react-router-dom";
 import { StyledButton } from "./Sidebar.styled";
 
 const buttonMap = [
-    "Dashboard",
-    "Classes",
-    "Assignments",
-    "Groups",
-    "Messages",
-    "Gradebook",
-    "Calendar"
+    {
+        name: "Dashboard",
+        path: "/"
+    },
+    {
+        name: "Classes",
+        path: "/classes"
+    },
+    {
+        name: "Assignments",
+        path: "/assignments"
+    },
+    {
+        name: "Groups",
+        path: "/groups"
+    },
+    {
+        name: "Messages",
+        path: "/messages"
+    },
+    {
+        name: "Gradebook",
+        path: "/gradebook"
+    },
+    {
+        name: "Calendar",
+        path: "/calendar"
+    }
 ];
 
 export const Sidebar: FunctionComponent = () => {
-    const [activeButton, setActiveButton] = useState(0);
+    const history = useHistory();
 
     return (
         <div
@@ -21,8 +43,8 @@ export const Sidebar: FunctionComponent = () => {
                 tw`w-1/6 bg-primary-normal overflow-hidden items-center flex flex-col pt-double`
             ]}
         >
-            {buttonMap.map((button, index) => {
-                const isActive = index === activeButton;
+            {buttonMap.map((button) => {
+                const isActive = history.location.pathname === button.path;
 
                 return (
                     <StyledButton
@@ -30,12 +52,12 @@ export const Sidebar: FunctionComponent = () => {
                             tw`w-10/12 rounded-full bg-primary-normal my-oneThird hover:text-gray-dark hover:bg-white`,
                             isActive && tw`bg-white text-gray-dark`
                         ]}
-                        onClick={() => setActiveButton(index)}
                         size="large"
                         active={isActive}
-                        key={`sidebar-nav-${button}`}
+                        to={button.path}
+                        key={`sidebar-nav-${button.name}`}
                     >
-                        {button}
+                        {button.name}
                     </StyledButton>
                 );
             })}

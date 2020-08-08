@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Button from "../Button/Button";
 import ButtonTypes from "../Button/button.types";
+import LinkButton from "../LinkButton/LinkButton";
 
 interface ButtonProps extends ButtonTypes {
     active: boolean;
 }
 
-export const StyledButton = styled(Button)<ButtonProps>`
+export const StyledButton = styled(LinkButton)<ButtonProps>`
     position: relative;
 
     ${({ active }) => {
