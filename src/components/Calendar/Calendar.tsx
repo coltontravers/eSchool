@@ -14,26 +14,21 @@ const days = [
     "saturday"
 ];
 
-// Where to place the 1st date.
-const colStartMap = {
-    0: tw`col-start-1`,
-    1: tw`col-start-2`,
-    2: tw`col-start-3`,
-    3: tw`col-start-4`,
-    4: tw`col-start-5`,
-    5: tw`col-start-6`,
-    6: tw`col-start-7`
-};
-
-const getColStart = (name: number) => css`
-    ${colStartMap[name as keyof typeof colStartMap]};
-    box-shadow: -2px 0px 0px 0px rgba(219, 219, 219);
-`;
-
 const Calendar: FunctionComponent<CalendarTypes> = () => {
-    // TODO: Get extra days from surrounding months to fill days out.
-    const daysInMonth = Array.from({ length: dayjs().daysInMonth() }, (x, i) =>
-        dayjs().startOf("month").add(i, "day")
+    const getDaysFromPrevMonth = dayjs().startOf("month").day();
+    const getDaysFromNextMonth = 6 - dayjs().endOf("month").day();
+
+    const daysInCalendar = Array.from(
+        {
+            length:
+                dayjs().daysInMonth() +
+                getDaysFromPrevMonth +
+                getDaysFromNextMonth
+        },
+        (x, i) =>
+            dayjs()
+                .startOf("month")
+                .add(i - getDaysFromPrevMonth, "day")
     );
 
     return (
@@ -56,7 +51,7 @@ const Calendar: FunctionComponent<CalendarTypes> = () => {
                     `
                 ]}
             >
-                {daysInMonth.map((day, index) => {
+                {daysInCalendar.map((day) => {
                     const formattedDay = dayjs(day).format("D");
 
                     return (
@@ -67,15 +62,16 @@ const Calendar: FunctionComponent<CalendarTypes> = () => {
                                     min-height: 150px;
                                     height: 20vh;
                                     max-height: 250px;
-                                `,
-                                !index && getColStart(dayjs(day).day())
+                                `
                             ]}
-                            key={`cal-day-${formattedDay}`}
+                            key={`cal-day-${day.toString()}`}
                         >
                             <span css={[tw`flex-1 text-right`]}>
                                 {formattedDay}
                             </span>
-                            <div css={[tw`p-full`]}>
+                            <div css={[tw`p-full overflow-hidden`]}>
+                                <CalendarItem />
+                                <CalendarItem />
                                 <CalendarItem />
                             </div>
                         </div>
