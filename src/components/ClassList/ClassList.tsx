@@ -3,7 +3,6 @@ import tw, { css, TwStyle } from "twin.macro";
 import Widget from "../Widget/Widget";
 import DetailsList from "./DetailsList/DetailsList";
 import ClassInfo from "./ClassInfo/ClassInfo";
-// import ClassListTypes, { defaultProps } from "./classList.types";
 
 const classListHeight = css`
     max-height: 70vh;
