@@ -26,9 +26,10 @@ const Calendar: FunctionComponent<CalendarTypes> = () => {
                 getDaysFromNextMonth
         },
         (x, i) =>
-            dayjs()
-                .startOf("month")
-                .add(i - getDaysFromPrevMonth, "day")
+            dayjs(getDaysFromPrevMonth).add(
+                i - (getDaysFromPrevMonth - 1),
+                "day"
+            )
     );
 
     return (
