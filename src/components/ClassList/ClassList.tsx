@@ -148,6 +148,7 @@ const ClassList: FunctionComponent = () => (
                             tw`flex flex-row`,
                             generateMargin(index, classes)
                         ]}
+                        key={`${name}-${time}-${index}`}
                     >
                         <div css={[tw`w-3/12 bg-tertiary-light`]}>
                             <ClassInfo
@@ -157,16 +158,13 @@ const ClassList: FunctionComponent = () => (
                                 time={time}
                             />
                         </div>
-                        <div css={[tw`flex-1`]}>
-                            <DetailsList
-                                name="Recent Grades"
-                                list={recentGrades}
-                            />
+                        <div css={[tw`flex-1 text-center`]}>
+                            <DetailsList name="Grades" list={recentGrades} />
                         </div>
-                        <div css={[tw`flex-1`]}>
+                        <div css={[tw`flex-1 text-center`]}>
                             <DetailsList name="Upcoming" list={upcoming} />
                         </div>
-                        <div css={[tw`flex-1`]}>
+                        <div css={[tw`flex-1 text-center`]}>
                             <DetailsList name="Files" list={files} />
                         </div>
                     </Widget>

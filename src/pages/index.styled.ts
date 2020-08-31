@@ -7,5 +7,4 @@ export const StyledPageWrapper = styled.div`
 
 export const StyledComponentWrapper = styled.div`
     flex: 1;
-    overflow: hidden;
 `;
