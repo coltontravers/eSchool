@@ -27,6 +27,10 @@ const GlobalStyles = `
   h6 {
     font-size: 1.2rem;
   }
+
+  button {
+    outline: none !important;
+  }
 `;
 
 export default GlobalStyles;

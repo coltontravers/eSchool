@@ -9,7 +9,7 @@ import DailyCalendarView from "./views/DailyCalendarView/DailyCalendarView";
 import WeeklyCalendarView from "./views/WeeklyCalendarView/WeeklyCalendarView";
 
 const Calendar: FunctionComponent<CalendarTypes> = () => {
-    const [view, setView] = useState<CalendarViewTypes>("Daily");
+    const [view, setView] = useState<CalendarViewTypes>("Weekly");
     const calendarRef = useRef<null | HTMLDivElement>(null);
 
     useLayoutEffect(() => {

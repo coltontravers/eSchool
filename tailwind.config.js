@@ -45,6 +45,7 @@ module.exports = {
             }
         },
         spacing: {
+            0: "0",
             oneThird: "0.20em",
             half: "0.50em",
             twoThirds: "0.66em",

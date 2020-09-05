@@ -1,6 +1,8 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import tw, { css } from "twin.macro";
 import dayjs from "dayjs";
+
+import CalendarMonthHeader from "../../CalendarMonthHeader/CalendarMonthHeader";
 import CalendarItem from "../../CalendarItem/CalendarItem";
 
 const days = [
@@ -14,8 +16,9 @@ const days = [
 ];
 
 const WeeklyCalendarView: FunctionComponent = () => {
-    const getDaysFromPrevMonth = dayjs().startOf("month").day();
-    const getDaysFromNextMonth = 6 - dayjs().endOf("month").day();
+    const [currentDay, setCurrentDay] = useState(dayjs());
+    const getDaysFromPrevMonth = dayjs(currentDay).startOf("month").day();
+    const getDaysFromNextMonth = 6 - dayjs(currentDay).endOf("month").day();
 
     const daysInCalendar = Array.from(
         {
@@ -33,11 +36,16 @@ const WeeklyCalendarView: FunctionComponent = () => {
 
     return (
         <>
+            <CalendarMonthHeader
+                monthFormat="normal"
+                currentDay={currentDay}
+                setCurrentDay={setCurrentDay}
+            />
             <div css={[tw`flex justify-between text-center`]}>
                 {days.map((day) => (
                     <span
                         css={[
-                            tw`flex-1 capitalize sm:text-extraSmall xl:text-small`
+                            tw`flex-1 capitalize text-gray-normal sm:text-extraSmall xl:text-small`
                         ]}
                         key={`cal-day-name-${day}`}
                     >
