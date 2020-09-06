@@ -4,12 +4,14 @@ import React, {
     useRef,
     useLayoutEffect
 } from "react";
-import CalendarTypes, { CalendarViewTypes } from "./calendar.types";
-import DailyCalendarView from "./views/DailyCalendarView/DailyCalendarView";
+import dayjs from "dayjs";
+import CalendarTypes from "./calendar.types";
 import WeeklyCalendarView from "./views/WeeklyCalendarView/WeeklyCalendarView";
+import MonthlyCalendarView from "./views/MonthlyCalendarView/MonthlyCalendarView";
 
-const Calendar: FunctionComponent<CalendarTypes> = () => {
-    const [view, setView] = useState<CalendarViewTypes>("Weekly");
+const Calendar: FunctionComponent<CalendarTypes> = ({ view }) => {
+    const [currentDay, setCurrentDay] = useState(dayjs());
+    const [currentView, setCurrentView] = useState(view);
     const calendarRef = useRef<null | HTMLDivElement>(null);
 
     useLayoutEffect(() => {
@@ -17,25 +19,37 @@ const Calendar: FunctionComponent<CalendarTypes> = () => {
             if (calendarRef.current) {
                 if (
                     calendarRef.current.getBoundingClientRect().width < 720 ||
-                    window.innerWidth < 1028
+                    window.outerWidth < 1280
                 ) {
-                    setView("Weekly");
+                    setCurrentView("Weekly");
                 } else {
-                    setView("Monthly");
+                    setCurrentView("Monthly");
                 }
             }
         };
 
-        window.addEventListener("resize", updateView);
+        if (!view) {
+            window.addEventListener("resize", updateView);
 
-        updateView();
+            updateView();
+        }
 
         return () => window.removeEventListener("resize", updateView);
     }, []);
 
     return (
         <div ref={calendarRef}>
-            {view === "Weekly" ? <DailyCalendarView /> : <WeeklyCalendarView />}
+            {currentView === "Weekly" ? (
+                <WeeklyCalendarView
+                    currentDay={currentDay}
+                    setCurrentDay={setCurrentDay}
+                />
+            ) : (
+                <MonthlyCalendarView
+                    currentDay={currentDay}
+                    setCurrentDay={setCurrentDay}
+                />
+            )}
         </div>
     );
 };

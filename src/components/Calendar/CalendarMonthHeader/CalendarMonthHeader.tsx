@@ -21,7 +21,14 @@ const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
         >
             <button
                 type="button"
-                onClick={() => setCurrentDay(currentDay.subtract(1, "week"))}
+                onClick={() =>
+                    setCurrentDay(
+                        currentDay.subtract(
+                            1,
+                            monthFormat === "normal" ? "month" : "week"
+                        )
+                    )
+                }
             >
                 <LeftArrowIcon size="1.5rem" />
             </button>
@@ -32,7 +39,14 @@ const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
             </h6>
             <button
                 type="button"
-                onClick={() => setCurrentDay(currentDay.add(1, "week"))}
+                onClick={() =>
+                    setCurrentDay(
+                        currentDay.add(
+                            1,
+                            monthFormat === "normal" ? "month" : "week"
+                        )
+                    )
+                }
             >
                 <RightArrowIcon size="1.5rem" />
             </button>

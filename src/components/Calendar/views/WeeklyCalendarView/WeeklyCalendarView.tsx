@@ -1,94 +1,84 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import tw, { css } from "twin.macro";
 import dayjs from "dayjs";
-
-import CalendarMonthHeader from "../../CalendarMonthHeader/CalendarMonthHeader";
 import CalendarItem from "../../CalendarItem/CalendarItem";
+import CalendarMonthHeader from "../../CalendarMonthHeader/CalendarMonthHeader";
+import WeeklyCalendarViewTypes, {
+    defaultProps
+} from "./WeeklyCalendarView.types";
 
-const days = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
-];
-
-const WeeklyCalendarView: FunctionComponent = () => {
-    const [currentDay, setCurrentDay] = useState(dayjs());
-    const getDaysFromPrevMonth = dayjs(currentDay).startOf("month").day();
-    const getDaysFromNextMonth = 6 - dayjs(currentDay).endOf("month").day();
-
-    const daysInCalendar = Array.from(
+const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
+    currentDay,
+    setCurrentDay
+}) => {
+    const daysInWeek = Array.from(
         {
-            length:
-                dayjs().daysInMonth() +
-                getDaysFromPrevMonth +
-                getDaysFromNextMonth
+            length: 7
         },
-        (x, i) =>
-            dayjs(getDaysFromPrevMonth).add(
-                i - (getDaysFromPrevMonth - 1),
-                "day"
-            )
+        (x, i) => {
+            const randonNumber = Math.floor(Math.random() * 6) + 1;
+
+            const elements = [];
+
+            for (let index = 0; index < randonNumber; index++) {
+                elements.push(<CalendarItem key={`cal-item-${index}`} />);
+            }
+
+            return {
+                day: currentDay.add(i, "day"),
+                elements
+            };
+        }
     );
 
     return (
-        <>
+        <div css={[tw`relative`]}>
             <CalendarMonthHeader
-                monthFormat="normal"
+                monthFormat="short"
                 currentDay={currentDay}
                 setCurrentDay={setCurrentDay}
             />
-            <div css={[tw`flex justify-between text-center`]}>
-                {days.map((day) => (
-                    <span
-                        css={[
-                            tw`flex-1 capitalize text-gray-normal sm:text-extraSmall xl:text-small`
-                        ]}
-                        key={`cal-day-name-${day}`}
-                    >
-                        {day}
-                    </span>
-                ))}
-            </div>
             <div
                 css={[
-                    tw`grid grid-cols-7 border-gray-light border-l-2`,
-                    css`
-                        grid-auto-rows: 1fr;
-                    `
+                    tw`flex justify-between text-center border-b-2 border-gray-light bg-white sticky top-0 w-full`
                 ]}
             >
-                {daysInCalendar.map((day) => {
-                    const formattedDay = dayjs(day).format("D");
+                {daysInWeek.map(({ day }) => {
+                    const sameDay = currentDay.isSame(day);
 
                     return (
                         <div
                             css={[
-                                tw`flex flex-col p-oneThird border-borders-dark border-gray-light border-r-2 border-b-2`,
-                                css`
-                                    min-height: 150px;
-                                    height: 20vh;
-                                    max-height: 250px;
-                                `
+                                tw`flex flex-col flex-1 capitalize sm:text-extraSmall xl:text-small`,
+                                sameDay && tw`bg-gray-light`
                             ]}
-                            key={`cal-day-${day.toString()}`}
+                            key={`cal-day-name-${day.toISOString()}`}
                         >
-                            <span css={[tw`flex-1 text-right`]}>
-                                {formattedDay}
-                            </span>
-                            <div css={[tw`xl:p-oneThird overflow-y-auto`]}>
-                                <CalendarItem />
-                                <CalendarItem />
-                            </div>
+                            <span>{dayjs(day).format("ddd")}</span>
+                            <span>{dayjs(day).format("D")}</span>
                         </div>
                     );
                 })}
             </div>
-        </>
+            <div
+                css={[
+                    tw`pt-half overflow-y-scroll`,
+                    css`
+                        max-height: calc(70vh - 54px);
+                    `
+                ]}
+            >
+                {daysInWeek.map(({ day, elements }) => (
+                    <div key={`cal-day-info-${day.toISOString()}`}>
+                        <span>{dayjs(day).format("D")}</span>
+                        {elements}
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
+
+WeeklyCalendarView.defaultProps = defaultProps;
 
 export default WeeklyCalendarView;
