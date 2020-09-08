@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useState, useMemo, useEffect } from "react";
+import React, {
+    FunctionComponent,
+    useState,
+    useMemo,
+    useEffect,
+    useRef
+} from "react";
 import tw, { css } from "twin.macro";
 import dayjs from "dayjs";
 import CalendarItem from "../../CalendarItem/CalendarItem";
@@ -12,6 +18,8 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
     setCurrentDay
 }) => {
     const [selectedDay, setSelectedDay] = useState(currentDay);
+
+    const weeklyCalendarRef = useRef<null | HTMLDivElement>(null);
 
     const daysInWeek = useMemo(
         () =>
@@ -44,16 +52,28 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
     }, [currentDay]);
 
     useEffect(() => {
-        document
-            ?.getElementById(`cal-day-info-${selectedDay.toISOString()}`)
-            ?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+        if (weeklyCalendarRef.current) {
+            const child = document?.getElementById(
+                `cal-day-info-${selectedDay.toISOString()}`
+            );
+
+            if (child) {
+                const parentRect = weeklyCalendarRef.current.getBoundingClientRect();
+                const childRect = child.getBoundingClientRect();
+
+                weeklyCalendarRef.current.scrollTo({
+                    top:
+                        childRect.top +
+                        weeklyCalendarRef.current.scrollTop -
+                        parentRect.top,
+                    behavior: "smooth"
+                });
+            }
+        }
     }, [selectedDay]);
 
     return (
-        <div css={[tw`relative`]}>
+        <div>
             <CalendarMonthHeader
                 monthFormat="short"
                 currentDay={currentDay}
@@ -62,7 +82,7 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
             />
             <div
                 css={[
-                    tw`flex justify-between text-center border-b-2 border-gray-light bg-white sticky top-0 w-full`
+                    tw`flex justify-between text-center border-b-2 border-gray-light bg-white w-full`
                 ]}
             >
                 {daysInWeek.map(({ day }) => {
@@ -90,16 +110,18 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
                         max-height: calc(70vh - 54px);
                     `
                 ]}
+                ref={weeklyCalendarRef}
             >
-                {daysInWeek.map(({ day, elements }) => (
-                    <div
-                        id={`cal-day-info-${day.toISOString()}`}
-                        key={`cal-day-info-${day.toISOString()}`}
-                    >
-                        <span>{dayjs(day).format("D")}</span>
-                        {elements}
-                    </div>
-                ))}
+                {daysInWeek.map(({ day, elements }) => {
+                    const dateToString = `cal-day-info-${day.toISOString()}`;
+
+                    return (
+                        <div id={dateToString} key={dateToString}>
+                            <span>{dayjs(day).format("D")}</span>
+                            {elements}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

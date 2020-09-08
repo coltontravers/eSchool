@@ -9,10 +9,10 @@ export const Classes: FunctionComponent = () => {
     return (
         <PageWrapper>
             <div css={[tw`grid grid-cols-8 grid-rows-2 gap-double`]}>
-                <div css={[tw`sm:col-span-8 lg:col-span-4`]}>
+                <div css={[tw`sm:col-span-8 lg:col-span-5 xl:col-span-4`]}>
                     <ClassList />
                 </div>
-                <div css={[tw`sm:col-span-8 lg:col-span-4`]}>
+                <div css={[tw`sm:col-span-8 lg:col-span-3 xl:col-span-4`]}>
                     <Widget shadow="medium">
                         <Calendar />
                     </Widget>

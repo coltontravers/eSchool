@@ -158,13 +158,25 @@ const ClassList: FunctionComponent = () => (
                                 time={time}
                             />
                         </div>
-                        <div css={[tw`flex-1 text-center`]}>
+                        <div
+                            css={[
+                                tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                            ]}
+                        >
                             <DetailsList name="Grades" list={recentGrades} />
                         </div>
-                        <div css={[tw`flex-1 text-center`]}>
+                        <div
+                            css={[
+                                tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                            ]}
+                        >
                             <DetailsList name="Upcoming" list={upcoming} />
                         </div>
-                        <div css={[tw`flex-1 text-center`]}>
+                        <div
+                            css={[
+                                tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                            ]}
+                        >
                             <DetailsList name="Files" list={files} />
                         </div>
                     </Widget>

@@ -4,7 +4,7 @@ import {
     RightArrowAlt as RightArrowIcon
 } from "@styled-icons/boxicons-regular";
 import dayjs from "dayjs";
-import tw from "twin.macro";
+import tw, { css } from "twin.macro";
 
 import CalendarMonthHeaderTypes, {
     defaultProps
@@ -18,7 +18,12 @@ const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
 }) => {
     return (
         <div
-            css={[tw`flex justify-between items-center mb-full w-3/12 mx-auto`]}
+            css={[
+                tw`flex justify-between items-center mb-full w-3/12 mx-auto`,
+                css`
+                    min-width: 150px;
+                `
+            ]}
         >
             <button
                 type="button"

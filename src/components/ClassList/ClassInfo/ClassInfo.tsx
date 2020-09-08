@@ -9,10 +9,12 @@ const ClassInfo: FunctionComponent<ClassInfoTypes> = ({
     time
 }) => (
     <>
-        <h6 css={[tw`my-oneThird`]}>{name}</h6>
-        <p css={[tw`my-oneThird`]}>{teacher}</p>
-        <p css={[tw`my-oneThird`]}>{grade}</p>
-        <p css={[tw`my-oneThird`]}>{time}</p>
+        <h6 css={[tw`my-oneThird text-center`]}>{name}</h6>
+        <div css={[tw`pl-half`]}>
+            <p css={[tw`my-oneThird`]}>{teacher}</p>
+            <p css={[tw`my-oneThird`]}>{grade}</p>
+            <p css={[tw`my-oneThird`]}>{time}</p>
+        </div>
     </>
 );
 
