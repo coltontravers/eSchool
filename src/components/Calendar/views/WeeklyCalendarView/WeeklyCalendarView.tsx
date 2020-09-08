@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState, useMemo, useEffect } from "react";
 import tw, { css } from "twin.macro";
 import dayjs from "dayjs";
 import CalendarItem from "../../CalendarItem/CalendarItem";
@@ -11,25 +11,46 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
     currentDay,
     setCurrentDay
 }) => {
-    const daysInWeek = Array.from(
-        {
-            length: 7
-        },
-        (x, i) => {
-            const randonNumber = Math.floor(Math.random() * 6) + 1;
+    const [selectedDay, setSelectedDay] = useState(currentDay);
 
-            const elements = [];
+    const daysInWeek = useMemo(
+        () =>
+            Array.from(
+                {
+                    length: 7
+                },
+                (x, i) => {
+                    const randonNumber = Math.floor(Math.random() * 6) + 1;
 
-            for (let index = 0; index < randonNumber; index++) {
-                elements.push(<CalendarItem key={`cal-item-${index}`} />);
-            }
+                    const elements = [];
 
-            return {
-                day: currentDay.add(i, "day"),
-                elements
-            };
-        }
+                    for (let index = 0; index < randonNumber; index++) {
+                        elements.push(
+                            <CalendarItem key={`cal-item-${index}`} />
+                        );
+                    }
+
+                    return {
+                        day: currentDay.add(i, "day"),
+                        elements
+                    };
+                }
+            ),
+        [currentDay]
     );
+
+    useEffect(() => {
+        setSelectedDay(currentDay);
+    }, [currentDay]);
+
+    useEffect(() => {
+        document
+            ?.getElementById(`cal-day-info-${selectedDay.toISOString()}`)
+            ?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+    }, [selectedDay]);
 
     return (
         <div css={[tw`relative`]}>
@@ -37,6 +58,7 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
                 monthFormat="short"
                 currentDay={currentDay}
                 setCurrentDay={setCurrentDay}
+                days={daysInWeek}
             />
             <div
                 css={[
@@ -44,19 +66,20 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
                 ]}
             >
                 {daysInWeek.map(({ day }) => {
-                    const sameDay = currentDay.isSame(day);
+                    const sameDay = selectedDay.isSame(day);
 
                     return (
-                        <div
+                        <button
+                            type="button"
+                            onClick={() => setSelectedDay(day)}
                             css={[
-                                tw`flex flex-col flex-1 capitalize sm:text-extraSmall xl:text-small`,
+                                tw`py-full flex-1 capitalize sm:text-extraSmall xl:text-small`,
                                 sameDay && tw`bg-gray-light`
                             ]}
                             key={`cal-day-name-${day.toISOString()}`}
                         >
-                            <span>{dayjs(day).format("ddd")}</span>
-                            <span>{dayjs(day).format("D")}</span>
-                        </div>
+                            {dayjs(day).format("ddd")}
+                        </button>
                     );
                 })}
             </div>
@@ -69,7 +92,10 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
                 ]}
             >
                 {daysInWeek.map(({ day, elements }) => (
-                    <div key={`cal-day-info-${day.toISOString()}`}>
+                    <div
+                        id={`cal-day-info-${day.toISOString()}`}
+                        key={`cal-day-info-${day.toISOString()}`}
+                    >
                         <span>{dayjs(day).format("D")}</span>
                         {elements}
                     </div>

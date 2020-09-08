@@ -13,11 +13,12 @@ import CalendarMonthHeaderTypes, {
 const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
     monthFormat,
     currentDay,
-    setCurrentDay
+    setCurrentDay,
+    days
 }) => {
     return (
         <div
-            css={[tw`flex justify-between items-center mb-full w-2/12 mx-auto`]}
+            css={[tw`flex justify-between items-center mb-full w-3/12 mx-auto`]}
         >
             <button
                 type="button"
@@ -32,11 +33,19 @@ const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
             >
                 <LeftArrowIcon size="1.5rem" />
             </button>
-            <h6 css={[tw`px-half`]}>
-                {dayjs(currentDay).format(
-                    monthFormat === "normal" ? "MMMM" : "MMM"
+            <div css={[tw`px-half text-center`]}>
+                <h6>
+                    {dayjs(currentDay).format(
+                        monthFormat === "normal" ? "MMMM" : "MMM"
+                    )}
+                </h6>
+                {monthFormat === "short" && (
+                    <span css={[tw`text-gray-dark`]}>
+                        {days?.[0].day.format("D")} -{" "}
+                        {days?.[days.length - 1].day.format("D")}
+                    </span>
                 )}
-            </h6>
+            </div>
             <button
                 type="button"
                 onClick={() =>
