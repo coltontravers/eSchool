@@ -98,6 +98,7 @@
         "react-query": "^2.5.4",
         "react-router-dom": "^5.2.0",
         "react-swipeable": "^5.5.1",
+        "react-virtual": "^2.2.5",
         "slick-carousel": "^1.8.1",
         "styled-components": "^5.1.1",
         "styled-icons": "^10.4.0",
