@@ -6,7 +6,7 @@ import routes from "./config/routes";
 import PageWrapper from "./pages";
 import GlobalStyles from "./styles";
 import "./assets/main.css";
-import { AppProvider } from "./state/AppState";
+import { AppProvider } from "./context/AppContext";
 
 const queryConfig = {
     shared: {

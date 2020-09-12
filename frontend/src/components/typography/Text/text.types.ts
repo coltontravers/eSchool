@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import tw from "twin.macro";
+import { colorsTypesWithString } from "../../../types/colors";
 
 export const fontSizes = {
     extraSmall: tw`text-extraSmall`,
@@ -19,7 +20,7 @@ export const fontWeights = {
 export default interface TextTypes {
     size?: keyof typeof fontSizes;
     weight?: keyof typeof fontWeights;
-    // color?: colorsTypesWithString;
+    color?: colorsTypesWithString;
     outline?: boolean;
     truncate?: boolean;
     children: ReactNode;

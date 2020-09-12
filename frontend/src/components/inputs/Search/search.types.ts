@@ -1,4 +1,4 @@
-import { colorsTypesWithString } from "../../../constants/colors";
+import { colorsTypesWithString } from "../../../types/colors";
 import { TextInputProps } from "../TextInput/textInput.types";
 import { FontSizesType } from "../../../types/typography";
 
