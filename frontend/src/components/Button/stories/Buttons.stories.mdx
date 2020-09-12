@@ -1,0 +1,37 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { boolean } from "@storybook/addon-knobs";
+import { Button } from "../Button";
+import { buttonSizes, buttonThemes } from "../button.types";
+
+<Meta title="Button" component={Button} />
+
+# Loading
+
+<Preview>
+    <Story name="loading">
+        <Button isLoading={boolean("isLoading", true)}>A Loading Button</Button>
+    </Story>
+</Preview>
+
+# Disabled
+
+<Preview>
+    <Story name="disabled">
+        <Button
+            disabled={boolean("disabled", true)}
+            style={{ minWidth: "200px!important" }}
+        >
+            A Disabled Button
+        </Button>
+    </Story>
+</Preview>
+
+<Preview>
+    <Story name="round">
+        <Button round>A Round Button</Button>
+    </Story>
+</Preview>
+
+## Props
+
+<Props of={Button} />

@@ -1,0 +1,92 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react",
+        "eslint-config-prettier",
+        "plugin:mdx/recommended"
+    ],
+    "parser": "babel-eslint",
+    "plugins": ["react", "prettier"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": ["@typescript-eslint", "import"],
+            "extends": [
+                "prettier/@typescript-eslint",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking",
+                "plugin:prettier/recommended"
+            ],
+            "settings": {
+                "import/resolver": {
+                    "typescript": {}
+                }
+            },
+            "parserOptions": {
+                "project": "./tsconfig.json",
+                "tsconfigRootDir": "./"
+            },
+            "rules": {
+                "react/prop-types": 0,
+                "@typescript-eslint/explicit-module-boundary-types": "off"
+            }
+        },
+        {
+            "files": ["*.test.tsx"],
+            "rules": {
+                "import/no-extraneous-dependencies": "off"
+            }
+        }
+    ],
+    "rules": {
+        "linebreak-style": 0,
+        "max-len": [1, 120, 2, { "ignoreComments": true }],
+        "no-unused-vars": 1,
+        "mdx/no-unused-expressions": 0,
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        ],
+        "react/prefer-stateless-function": 1,
+        "react/prop-types": 1,
+        "import/prefer-default-export": "off",
+        "import/no-named-as-default": "off",
+        "no-plusplus": "off",
+        "react/require-default-props": "off",
+        "react/state-in-constructor": "off",
+        "react/static-property-placement": "off",
+        "react/jsx-props-no-spreading": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/no-array-index-key": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ]
+    },
+    "env": {
+        "jest": true
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    }
+}
