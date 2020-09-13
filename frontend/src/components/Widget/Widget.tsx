@@ -20,7 +20,11 @@ const Widget: FunctionComponent<
     WidgetTypes & HTMLAttributes<HTMLDivElement>
 > = ({ round, shadow, children, className, ...restProps }) => (
     <div
-        css={[round && tw`rounded-sm`, shadow && generateBoxShadow(shadow)]}
+        css={[
+            tw`overflow-hidden`,
+            round && tw`rounded-md`,
+            shadow && generateBoxShadow(shadow)
+        ]}
         className={className}
         {...restProps}
     >

@@ -3,6 +3,7 @@ import tw, { css } from "twin.macro";
 import Widget from "../Widget/Widget";
 import DetailsList from "./DetailsList/DetailsList";
 import ClassInfo from "./ClassInfo/ClassInfo";
+import ClassListTypes, { defaultProps } from "./classList.types";
 
 const recentGradesArr = [
     {
@@ -114,8 +115,8 @@ const classes = [
     }
 ];
 
-const ClassList: FunctionComponent = () => (
-    <div css={[tw`flex flex-wrap justify-between -m-oneThird p-oneThird`]}>
+const ClassList: FunctionComponent<ClassListTypes> = ({ showDetails }) => (
+    <div css={[tw`grid grid-cols-8 -m-oneThird p-oneThird`]}>
         {classes.map(
             (
                 { name, teacher, grade, time, recentGrades, upcoming, files },
@@ -125,14 +126,12 @@ const ClassList: FunctionComponent = () => (
                     <Widget
                         shadow="medium"
                         css={[
-                            tw`flex flex-col w-3/12 m-half`,
-                            css`
-                                min-width: 300px;
-                            `
+                            tw`flex flex-col sm:col-span-4 lg:col-span-3 xxl:col-span-2 m-half`
                         ]}
+                        round
                         key={`${name}-${time}-${index}`}
                     >
-                        <div css={[tw`bg-tertiary-light`]}>
+                        <div css={[tw`bg-tertiary-light w-full`]}>
                             <ClassInfo
                                 name={name}
                                 teacher={teacher}
@@ -140,32 +139,37 @@ const ClassList: FunctionComponent = () => (
                                 time={time}
                             />
                         </div>
-                        <div css={[tw`flex flex-row`]}>
-                            <div
-                                css={[
-                                    tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
-                                ]}
-                            >
-                                <DetailsList
-                                    name="Grades"
-                                    list={recentGrades}
-                                />
+                        {showDetails && (
+                            <div css={[tw`flex flex-row`]}>
+                                <div
+                                    css={[
+                                        tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                                    ]}
+                                >
+                                    <DetailsList
+                                        name="Grades"
+                                        list={recentGrades}
+                                    />
+                                </div>
+                                <div
+                                    css={[
+                                        tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                                    ]}
+                                >
+                                    <DetailsList
+                                        name="Upcoming"
+                                        list={upcoming}
+                                    />
+                                </div>
+                                <div
+                                    css={[
+                                        tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
+                                    ]}
+                                >
+                                    <DetailsList name="Files" list={files} />
+                                </div>
                             </div>
-                            <div
-                                css={[
-                                    tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
-                                ]}
-                            >
-                                <DetailsList name="Upcoming" list={upcoming} />
-                            </div>
-                            <div
-                                css={[
-                                    tw`flex-1 text-center bg-tertiary-light bg-opacity-25`
-                                ]}
-                            >
-                                <DetailsList name="Files" list={files} />
-                            </div>
-                        </div>
+                        )}
                     </Widget>
                 );
             }
@@ -173,6 +177,6 @@ const ClassList: FunctionComponent = () => (
     </div>
 );
 
-// ClassList.defaultProps = defaultProps;
+ClassList.defaultProps = defaultProps;
 
 export default ClassList;

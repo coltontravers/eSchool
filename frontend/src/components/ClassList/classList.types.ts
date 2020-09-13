@@ -1,5 +1,7 @@
-// export default interface ClassListTypes {
-// }
+export default interface ClassListTypes {
+    showDetails?: boolean;
+}
 
-// export const defaultProps: ClassListTypes = {
-// };
+export const defaultProps: ClassListTypes = {
+    showDetails: false
+};
