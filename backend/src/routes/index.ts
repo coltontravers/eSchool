@@ -1,3 +1,4 @@
-import eventRoutes from './eventsRoutes';
+import eventRoutes from './eventRoutes';
+import classRoutes from './classRoutes';
 
-export default [eventRoutes];
+export default [eventRoutes, classRoutes];

@@ -44,6 +44,7 @@
         "linebreak-style": 0,
         "max-len": [1, 120, 2, { "ignoreComments": true }],
         "no-unused-vars": 1,
+        "no-empty-pattern": "off",
         "mdx/no-unused-expressions": 0,
         "react/jsx-filename-extension": [
             1,

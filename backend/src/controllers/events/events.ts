@@ -13,6 +13,7 @@ const generateEvents = (
 		.add(1, 'day')
 		.toISOString(),
 ): EventsInterface[] => {
+	console.log({ startDate });
 	const diff = dayjs(endDate).diff(startDate, 'day');
 
 	const arrayOfEvents = Array.from(

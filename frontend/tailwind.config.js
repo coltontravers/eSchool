@@ -18,6 +18,7 @@ module.exports = {
             transparent: "transparent",
             warning: "orange",
             success: "green",
+            error: "red",
             gray: {
                 light: "#dbdbdb",
                 normal: "#9b9b9b",

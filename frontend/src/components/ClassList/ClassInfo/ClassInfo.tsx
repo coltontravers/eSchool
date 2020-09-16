@@ -2,6 +2,8 @@ import React, { FunctionComponent } from "react";
 import tw, { css } from "twin.macro";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { gradeToLetter } from "../../../helpers/grade/gradeToLetter";
+import { gradeToColor } from "../../../helpers/grade/gradeToColor";
 import ClassInfoTypes from "./classInfo.types";
 
 const ClassInfo: FunctionComponent<ClassInfoTypes> = ({
@@ -20,18 +22,35 @@ const ClassInfo: FunctionComponent<ClassInfoTypes> = ({
                 `
             ]}
         >
-            <CircularProgressbarWithChildren value={35}>
-                <p css={[tw`uppercase font-bold text-gray-dark leading-none`]}>
+            <CircularProgressbarWithChildren
+                value={grade}
+                styles={{
+                    path: {
+                        stroke: gradeToColor(grade)
+                    }
+                }}
+            >
+                <p css={[tw`font-extraBold text-gray-dark leading-none`]}>
                     {grade}
                 </p>
-                <p css={[tw`text-gray-dark`]}>96</p>
+                <p css={[tw`uppercase text-gray-dark`]}>
+                    {gradeToLetter(grade)}
+                </p>
             </CircularProgressbarWithChildren>
         </div>
-        <h6 css={[tw`my-oneThird text-center truncate`]}>{name}</h6>
-        <div css={[tw`pl-half`]}>
-            <p css={[tw`my-oneThird`]}>{teacher}</p>
+        <div
+            css={[
+                tw`flex flex-row flex-1 flex-wrap justify-around items-center overflow-hidden`
+            ]}
+        >
+            <h6 css={[tw`px-half font-bold text-center truncate`]}>{name}</h6>
+            <div css={[tw`px-half text-center`]}>
+                <p css={[tw`my-oneThird text-gray-dark font-bold`]}>
+                    {teacher}
+                </p>
 
-            <p css={[tw`my-oneThird`]}>{time}</p>
+                <p css={[tw`my-oneThird text-gray-dark font-light`]}>{time}</p>
+            </div>
         </div>
     </div>
 );

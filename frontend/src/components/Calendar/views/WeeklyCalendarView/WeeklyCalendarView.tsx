@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { useVirtual } from "react-virtual";
 import CalendarItem from "../../CalendarItem/CalendarItem";
 import CalendarMonthHeader from "../../CalendarMonthHeader/CalendarMonthHeader";
+import { getEvents, GetEventsParams } from "../../../../api/event";
 import WeeklyCalendarViewTypes, {
     defaultProps
 } from "./WeeklyCalendarView.types";
@@ -20,13 +21,16 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
 
     const { isLoading, data: daysInWeek } = useQuery<
         DayInterface[],
-        [string, dayjs.Dayjs]
-    >(["weekly-calendar-view", selectedDay], () =>
-        fetch(
-            `http://127.0.0.1:3000/api/events?startDate=${selectedDay.toISOString()}&endDate=${selectedDay
-                .add(1, "week")
-                .toISOString()}`
-        ).then((res) => res.json())
+        [string, GetEventsParams]
+    >(
+        [
+            "weekly-calendar-view",
+            {
+                startDate: selectedDay.toISOString(),
+                endDate: selectedDay.add(1, "week").toISOString()
+            }
+        ],
+        getEvents
     );
 
     const rowVirtualizer = useVirtual({

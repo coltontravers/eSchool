@@ -44,10 +44,10 @@ const CalendarMonthHeader: FunctionComponent<CalendarMonthHeaderTypes> = ({
                         monthFormat === "normal" ? "MMMM" : "MMM"
                     )}
                 </h6>
-                {monthFormat === "short" && (
+                {monthFormat === "short" && days?.length && (
                     <span css={[tw`text-gray-dark`]}>
-                        {dayjs(days?.[0].day).format("D")} -{" "}
-                        {dayjs(days?.[days.length - 1].day).format("D")}
+                        {dayjs(days[0].day).format("D")} -{" "}
+                        {dayjs(days[days.length - 1].day).format("D")}
                     </span>
                 )}
             </div>

@@ -1,0 +1,26 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { number, text } from "@storybook/addon-knobs";
+import dayjs from "dayjs";
+import Task from "./Task.tsx";
+import Widget from "../../Widget/Widget.tsx";
+
+<Meta title="Task" component={Task} />
+
+<Preview>
+    <Story name="default">
+        <Widget shadow="medium">
+            <Task
+                type={text("type", "quiz")}
+                className={text("class name", "English")}
+                teacherName={text("teach name", "Colton Travers")}
+                taskName={text("task name", "Spelling List")}
+                taskDueDate={text("task due date", dayjs().toISOString())}
+                taskStatus={number("task status", 50)}
+            />
+        </Widget>
+    </Story>
+</Preview>
+
+## Props
+
+<Props of={Task} />

@@ -1,6 +1,6 @@
 export default interface ClassInfoTypes {
     name: string;
     teacher: string;
-    grade: string;
+    grade: number;
     time: string;
 }
