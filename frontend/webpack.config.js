@@ -1,4 +1,6 @@
 const path = require("path");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -12,7 +14,15 @@ module.exports = {
             {
                 test: /\.(.js|ts|tsx)$/,
                 include: path.resolve(__dirname, "src"),
-                use: ["babel-loader", "eslint-loader"]
+                use: [
+                    {
+                        loader: require.resolve("babel-loader"),
+                        options: {
+                            plugins: [require.resolve("react-refresh/babel")]
+                        }
+                    },
+                    "eslint-loader"
+                ]
             },
             {
                 test: /\.css$/i,
@@ -39,5 +49,9 @@ module.exports = {
         hot: true,
         stats: "minimal",
         overlay: true
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new ReactRefreshWebpackPlugin()
+    ]
 };
