@@ -1,18 +1,13 @@
 import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
-import { useQuery } from "react-query";
 import Widget from "../Widget/Widget";
 import DetailsList from "./DetailsList/DetailsList";
 import ClassInfo from "./ClassInfo/ClassInfo";
-import { getClasses } from "../../api/class";
 import ClassListTypes, { defaultProps } from "./classList.types";
-import ClassInterface from "../../types/class";
+import { useClasses } from "../../api/hooks/useClasses";
 
 const ClassList: FunctionComponent<ClassListTypes> = ({ showDetails }) => {
-    const { data: classes } = useQuery<ClassInterface[], string>(
-        "class-list",
-        getClasses
-    );
+    const { data: classes } = useClasses();
 
     return (
         <div css={[tw`grid grid-cols-12 -m-oneThird p-oneThird`]}>

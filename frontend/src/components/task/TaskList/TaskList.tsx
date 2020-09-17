@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
-import { useQuery } from "react-query";
 
 const TaskList: FunctionComponent = () => {
     // const { data: classes } = useQuery<ClassInterface[], string>(

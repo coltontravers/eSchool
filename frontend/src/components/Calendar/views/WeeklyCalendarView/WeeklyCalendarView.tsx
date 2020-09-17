@@ -1,11 +1,10 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import tw, { css } from "twin.macro";
-import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import { useVirtual } from "react-virtual";
 import CalendarItem from "../../CalendarItem/CalendarItem";
 import CalendarMonthHeader from "../../CalendarMonthHeader/CalendarMonthHeader";
-import { getEvents, GetEventsParams } from "../../../../api/event";
+import { useEvents } from "../../../../api/hooks/useEvents";
 import WeeklyCalendarViewTypes, {
     defaultProps
 } from "./WeeklyCalendarView.types";
@@ -19,19 +18,10 @@ const WeeklyCalendarView: FunctionComponent<WeeklyCalendarViewTypes> = ({
 
     const weeklyCalendarRef = useRef<null | HTMLDivElement>(null);
 
-    const { isLoading, data: daysInWeek } = useQuery<
-        DayInterface[],
-        [string, GetEventsParams]
-    >(
-        [
-            "weekly-calendar-view",
-            {
-                startDate: selectedDay.toISOString(),
-                endDate: selectedDay.add(1, "week").toISOString()
-            }
-        ],
-        getEvents
-    );
+    const { isLoading, data: daysInWeek } = useEvents({
+        startDate: selectedDay.toISOString(),
+        endDate: selectedDay.add(1, "week").toISOString()
+    });
 
     const rowVirtualizer = useVirtual({
         size: isLoading || !daysInWeek ? 0 : daysInWeek.length,
