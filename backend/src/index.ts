@@ -1,31 +1,103 @@
-import Fastify from 'fastify';
-import cors from 'fastify-cors';
-import { Options } from './config/swagger';
-import { config } from './config';
-import swagger from 'fastify-swagger';
-import routes from './routes';
+import "reflect-metadata";
+import { createConnection } from "typeorm";
+import { buildSchema } from "type-graphql";
+import path from "path";
+import dotenv from "dotenv";
+import Fastify, { FastifyRequest, FastifyReply } from "fastify";
+import GQL from "fastify-gql";
+import { User } from "./entities/User";
+import { Class } from "./entities/Class";
+import { Grade } from "./entities/Grade";
+import cors from "fastify-cors";
+import { ExampleResolver } from "./resolvers/example";
+import Redis from "ioredis";
+import { UserResolver } from "./resolvers/user/user";
+import { authChecker } from "./authentication/authChecker";
+import { getUserFromToken } from "./authentication/dbQuery";
+import { fastifyRequestContextPlugin } from "fastify-request-context";
+import { ClassResolver } from "./resolvers/class/class";
+import { GradeResolver } from "./resolvers/grade/grade";
+dotenv.config();
 
-// Configure HTTP server
-const app = Fastify({ logger: true });
+let DEV = process.env.NODE_ENV === "development";
+let PROD = process.env.NODE_ENV === "production";
 
-routes.forEach(route => {
-	app.register(route);
-});
+const main = async () => {
+    console.log("Connecting to DB");
 
-// Register Swagger
-app.register(swagger, Options);
+    const conn = await createConnection({
+        type: "postgres",
+        url: process.env.DATABASE_URL,
+        logging: DEV,
+        migrations: [path.join(__dirname, "./migrations/*")],
+        entities: [User, Class, Grade],
+        cache: {
+            duration: 1000 * 10, // 10 seconds
+            type: "ioredis",
+            options: process.env.REDIS_URL
+        },
+        synchronize: DEV
+    });
+    console.log("DB connection completed");
+    if (PROD) {
+        console.log("Migrating DB");
+        await conn.runMigrations();
+        console.log("Finished DB migrations");
+    }
 
-app.register(cors, { origin: '*' });
+    console.log("Connecting to Redis");
+    var redis = new Redis(process.env.REDIS_URL);
+    console.log("Redis connection completed");
 
-const start = async (): Promise<void> => {
-	try {
-		await app.listen(config.app.port);
-		app.swagger();
-	} catch (err) {
-		app.log.error(err);
-		process.exit(1);
-	}
+    const app = Fastify({ logger: DEV });
+    app.get("/", async (_, reply) => {
+        reply.type("application/json").code(200);
+        return { hello: "world!!!" };
+    });
+
+    app.register(fastifyRequestContextPlugin);
+
+    app.addHook("onRequest", async (req, _) => {
+        // If the request has an Authorization header,
+        // parse it and fetch the appropriate user from
+        // the corresponding apiToken
+        req.requestContext.set("user", await getUserFromToken(req));
+        return;
+    });
+
+    // Use graphqlbin.com for a GraphQL visual query editor
+    app.register(cors, {
+        origin: "https://www.graphqlbin.com"
+    });
+
+    app.register(GQL, {
+        schema: await buildSchema({
+            resolvers: [
+                ExampleResolver,
+                UserResolver,
+                ClassResolver,
+                GradeResolver
+            ],
+            authChecker
+        }),
+        jit: 1,
+        graphiql: "playground",
+        context: async (request: FastifyRequest, reply: FastifyReply) => {
+            return {
+                req: request,
+                res: reply,
+                redis,
+                user: request.requestContext.get("user")
+            };
+        }
+    });
+    app.listen(
+        parseInt(<string>process.env.PORT) || 3000,
+        "0.0.0.0",
+        (err, address) => {
+            if (err) throw err;
+            app.log.info(`server listening on ${address}`);
+        }
+    );
 };
-start();
-
-export default app;
+main().catch((err) => console.error(err));
