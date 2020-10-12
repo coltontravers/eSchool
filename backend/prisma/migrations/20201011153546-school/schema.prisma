@@ -1,0 +1,39 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = "***"
+}
+
+/// This model has been renamed to 'Renamedclass' during introspection, because the original name 'class' is reserved.
+model classroom {
+    id      Int     @id @default(autoincrement())
+    name    String
+    teacher String
+    grade   Int
+    time    String
+    grades  grade[]
+
+    @@map("class")
+}
+
+model grade {
+    id           Int        @id @default(autoincrement())
+    name         String
+    grade        Int
+    classroom_id Int?
+    classroom    classroom? @relation(fields: [classroom_id], references: [id])
+}
+
+model user {
+    id         Int      @id @default(autoincrement())
+    givenName  String
+    familyName String
+    email      String   @unique
+    password   String
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+    apiToken   String
+}

@@ -1,13 +1,13 @@
 FROM node:14.8.0-alpine3.11 AS brain-builder
-LABEL maintainer="vatirreau@uc.cl"
 
 # Set up base directory
 WORKDIR /app
 
 # Cache node_modules as a separate layer
 COPY package*.json yarn.lock ./
-RUN yarn clean
+COPY prisma ./prisma/
 RUN yarn install
+RUN yarn gen-prisma
 
 # Add node_modules binaries to the PATH
 ENV PATH="/usr/src/app/node_modules/.bin:$PATH"
@@ -20,6 +20,8 @@ EXPOSE 3000
 
 # Copy app contents
 COPY . .
+
+RUN yarn gen-nexus
 
 # Compile TypeScript
 RUN yarn build
