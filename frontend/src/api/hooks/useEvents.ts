@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { DayInterface } from "../../components/Calendar/calendar.types";
+import { DayInterface } from "components/Calendar/calendar.types";
 import { apiAddress } from "..";
 
 export interface GetEventsParams {

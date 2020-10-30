@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from "react";
 import tw, { css } from "twin.macro";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { gradeToLetter } from "../../../helpers/grade/gradeToLetter";
-import { gradeToColor } from "../../../helpers/grade/gradeToColor";
+import { gradeToLetter } from "utils/grade/gradeToLetter";
+import { gradeToColor } from "utils/grade/gradeToColor";
 import ClassInfoTypes from "./classInfo.types";
 
 const ClassInfo: FunctionComponent<ClassInfoTypes> = ({

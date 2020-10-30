@@ -7,6 +7,7 @@
     "@nexus/schema": "^0.16.0",
     "@prisma/client": "2.8.1",
     "fastify": "^3.5.1",
+    "fastify-cors": "^4.1.0",
     "fastify-gql": "^5.8.2",
     "graphql": "^15.3.0",
     "nexus-plugin-prisma": "^0.21.0"
@@ -22,6 +23,8 @@
     "gen-prisma": "npx prisma generate",
     "gen-nexus": "ts-node -T api/schema.ts --nexus-exit",
     "db-migration": "npx prisma migrate save --experimental && npx prisma migrate up --experimental",
+    "start": "docker-compose up",
+    "docker:build": "docker-compose build",
     "dev": "ts-node-dev --transpile-only --no-notify api/app.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"

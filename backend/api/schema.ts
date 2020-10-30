@@ -1,12 +1,11 @@
 import { makeSchema } from "@nexus/schema";
 import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
 import { join } from "path";
-import * as queries from "./queries";
-import * as mutations from "./mutations";
-import * as types from "./types";
+import * as schemas from "./schema/index";
+import * as types from "./schema/types";
 
 export const schema = makeSchema({
-    types: [queries, mutations, types], // 1
+    types: [schemas, types], // 1
     plugins: [
         nexusSchemaPrisma({
             experimentalCRUD: true

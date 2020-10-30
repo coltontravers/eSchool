@@ -1,0 +1,15 @@
+query classrooms(
+    $id: Boolean! = true
+    $name: Boolean! = true
+    $teacher: Boolean! = true
+    $grade: Boolean! = true
+    $time: Boolean! = true
+) {
+    classrooms {
+        id @include(if: $id)
+        name @include(if: $name)
+        teacher @include(if: $teacher)
+        grade @include(if: $grade)
+        time @include(if: $time)
+    }
+}

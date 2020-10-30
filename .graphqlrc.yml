@@ -1,0 +1,2 @@
+schema: "./backend/prisma/generated/schema.graphql"
+documents: "./frontend/src/**/*.{graphql,js,ts,jsx,tsx}"

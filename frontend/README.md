@@ -1,1 +1,1 @@
-A remote learning tool for students and teachers.
+This is a starter template for [Learn Next.js](https://nextjs.org/learn).

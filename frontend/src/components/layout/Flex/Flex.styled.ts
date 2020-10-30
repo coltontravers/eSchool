@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import flexTypes from "./flexTypes";
+import flexTypes from "./flex.types";
 
 export const StyledFlex = styled.div<flexTypes>`
     display: flex;

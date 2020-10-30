@@ -1,46 +1,21 @@
-import React, { FunctionComponent, useContext } from "react";
-import { useSwipeable, EventData } from "react-swipeable";
-import Sidebar from "../components/Sidebar/Sidebar";
-import PageProps, { defaultProps } from "./indexTypes";
-import AppContext, { DisptachType, Types } from "../context/AppContext";
-import { StyledPageWrapper, StyledComponentWrapper } from "./index.styled";
+import React, { FunctionComponent } from "react";
+import tw from "twin.macro"
+import PageWrapper from "components/layout/PageWrapper/PageWrapper";
+import ClassList from "components/ClassList/ClassList";
 
-const swipeHandler = (
-    eventData: EventData,
-    dispatch: DisptachType
-    // eslint-disable-next-line consistent-return
-) => {
-    switch (eventData.dir) {
-        case "Left":
-            return dispatch({ type: Types.CloseMobileSidebar });
-
-        case "Right":
-            return dispatch({ type: Types.OpenMobileSidebar });
-
-        default:
-            break;
-    }
-};
-
-const Page: FunctionComponent<PageProps> = ({
-    route: { component: Component }
-}) => {
-    const { dispatch } = useContext(AppContext);
-
-    const handlers = useSwipeable({
-        onSwiped: (eventData) => swipeHandler(eventData, dispatch)
-    });
-
+export const Home: FunctionComponent = () => {
     return (
-        <StyledPageWrapper {...handlers}>
-            <Sidebar />
-            <StyledComponentWrapper>
-                {Component && <Component />}
-            </StyledComponentWrapper>
-        </StyledPageWrapper>
+        <PageWrapper>
+            <div css={[tw`grid grid-cols-12`]}>
+                <div css={[tw`col-span-12 xl:col-span-9`]}>
+                    <div>
+                        <ClassList />
+                    </div>
+                </div>
+                <div css={[tw`col-span-12 xl:col-span-3`]} />
+            </div>
+        </PageWrapper>
     );
 };
 
-Page.defaultProps = defaultProps;
-
-export default Page;
+export default Home;

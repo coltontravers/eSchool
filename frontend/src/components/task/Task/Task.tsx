@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import { Task as TaskProps } from "../../../../../types/task/task";
 import { defaultProps } from "./Task.types";
-import gradeToColor from "../../../helpers/grade/gradeToColor";
+import gradeToColor from "utils/grade/gradeToColor";
 import TaskCircle from "../TaskCircle/TaskCircle";
 
 const Task: FunctionComponent<TaskProps> = ({

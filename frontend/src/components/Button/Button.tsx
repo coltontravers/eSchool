@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import tw, { css } from "twin.macro";
+import tw, {css} from "twin.macro";
 import { Spinner } from "@styled-icons/fa-solid";
 import ButtonTypes, {
     defaultProps,

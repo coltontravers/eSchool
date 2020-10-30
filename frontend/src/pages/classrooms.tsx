@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
-import tw from "twin.macro";
-import Widget from "../../components/Widget/Widget";
-import PageWrapper from "../../components/layout/PageWrapper/PageWrapper";
-import ClassList from "../../components/ClassList/ClassList";
-import Calendar from "../../components/Calendar/Calendar";
+import tw from "twin.macro"
+import Widget from "components/Widget/Widget";
+import PageWrapper from "components/layout/PageWrapper/PageWrapper";
+import ClassList from "components/ClassList/ClassList";
+import Calendar from "components/Calendar/Calendar";
 
-export const Classes: FunctionComponent = () => {
+export const Classrooms: FunctionComponent = () => {
     return (
         <PageWrapper>
             <div css={[tw`grid grid-cols-8 grid-rows-2 gap-double`]}>
@@ -33,4 +33,4 @@ export const Classes: FunctionComponent = () => {
     );
 };
 
-export default Classes;
+export default Classrooms;

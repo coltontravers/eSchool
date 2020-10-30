@@ -1,6 +1,17 @@
-const tailwindcss = require("tailwindcss");
-
 module.exports = {
-    // eslint-disable-next-line global-require
-    plugins: [tailwindcss("./tailwind.config.js"), require("autoprefixer")]
+    plugins: [
+        "tailwindcss",
+        [
+            "postcss-preset-env",
+            {
+                autoprefixer: {
+                    flexbox: "no-2009"
+                },
+                stage: 3,
+                features: {
+                    "custom-properties": false
+                }
+            }
+        ]
+    ]
 };

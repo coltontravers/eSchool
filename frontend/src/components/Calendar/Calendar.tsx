@@ -2,7 +2,7 @@ import React, {
     FunctionComponent,
     useState,
     useRef,
-    useLayoutEffect
+    useEffect
 } from "react";
 import dayjs from "dayjs";
 import CalendarTypes from "./calendar.types";
@@ -14,7 +14,7 @@ const Calendar: FunctionComponent<CalendarTypes> = ({ view }) => {
     const [currentView, setCurrentView] = useState(view);
     const calendarRef = useRef<null | HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const updateView = () => {
             if (calendarRef.current) {
                 if (

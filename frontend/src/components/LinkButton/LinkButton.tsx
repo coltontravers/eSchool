@@ -1,22 +1,22 @@
 import React, { FunctionComponent } from "react";
-import { useHistory } from "react-router";
+import { useRouter } from 'next/router';
 import Button from "../Button/Button";
 import { defaultProps } from "../Button/button.types";
 import { LinkButtonTypes } from "./linkButton.types";
 
 export const LinkButton: FunctionComponent<LinkButtonTypes> = ({
-    to = "",
+    to,
     children,
-    onClick,
+    onClick = () => null,
     ...restProps
 }) => {
-    const history = useHistory();
+    const router = useRouter();
 
     return (
         <Button
             onClick={(event) => {
-                onClick && onClick(event);
-                history.push(to);
+                onClick(event);
+                router.push(to);
             }}
             {...restProps}
         >
