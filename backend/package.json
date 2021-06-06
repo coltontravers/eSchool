@@ -23,11 +23,12 @@
     "gen-prisma": "npx prisma generate",
     "gen-nexus": "ts-node -T api/schema.ts --nexus-exit",
     "db-migration": "npx prisma migrate save --experimental && npx prisma migrate up --experimental",
-    "start": "docker-compose up",
+    "start": "yarn docker:up",
     "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
     "dev": "ts-node-dev --transpile-only --no-notify api/app.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "yarn gen-prisma"
   },
   "keywords": [],
   "author": "",

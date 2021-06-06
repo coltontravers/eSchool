@@ -157,6 +157,10 @@ export interface NexusGenRootTypes {
     teacher: string; // String!
     time: string; // String!
   }
+  event: { // root type
+    id: number; // Int!
+    user_id?: number | null; // Int
+  }
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
@@ -197,6 +201,10 @@ export interface NexusGenFieldTypes {
     teacher: string; // String!
     time: string; // String!
   }
+  event: { // field return type
+    id: number; // Int!
+    user_id: number | null; // Int
+  }
 }
 
 export interface NexusGenArgTypes {
@@ -224,7 +232,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "classroom";
+export type NexusGenObjectNames = "Mutation" | "Query" | "classroom" | "event";
 
 export type NexusGenInputNames = "GradeListRelationFilter" | "IntFilter" | "IntNullableFilter" | "NestedIntFilter" | "NestedIntNullableFilter" | "NestedStringFilter" | "StringFilter" | "classroomCreateInput" | "classroomWhereInput" | "classroomWhereUniqueInput" | "gradeCreateManyWithoutClassroomInput" | "gradeCreateWithoutClassroomInput" | "gradeWhereInput" | "gradeWhereUniqueInput";
 

@@ -34,6 +34,11 @@ input classroomWhereUniqueInput {
   id: Int
 }
 
+type event {
+  id: Int!
+  user_id: Int
+}
+
 input gradeCreateManyWithoutClassroomInput {
   connect: [gradeWhereUniqueInput!]
   create: [gradeCreateWithoutClassroomInput!]
