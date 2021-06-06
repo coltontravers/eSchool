@@ -1,9 +1,4 @@
-import React, {
-    FunctionComponent,
-    useState,
-    useRef,
-    useEffect
-} from "react";
+import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import dayjs from "dayjs";
 import CalendarTypes from "./calendar.types";
 import WeeklyCalendarView from "./views/WeeklyCalendarView/WeeklyCalendarView";

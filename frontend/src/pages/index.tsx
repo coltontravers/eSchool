@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import tw from "twin.macro"
+import tw from "twin.macro";
 import PageWrapper from "components/layout/PageWrapper/PageWrapper";
 import ClassList from "components/ClassList/ClassList";
 

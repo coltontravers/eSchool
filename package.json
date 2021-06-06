@@ -4,11 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start:client": "cd frontend && npm run dev",
-        "start:server": "cd backend && npm run start",
-        "start": "concurrently \"npm run start:client \" \"npm run start:server\"",
+        "start:client": "cd frontend && yarn dev",
+        "start:server": "cd backend && yarn start",
+        "start": "concurrently \"yarn start:client \" \"yarn start:server\"",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "cd frontend && npm install && cd ../backend && npm install && cd .."
+        "postinstall": "cd frontend && yarn && cd ../backend && yarn && cd .."
     },
     "repository": {
         "type": "git",

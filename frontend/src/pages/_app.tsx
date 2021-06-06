@@ -1,6 +1,11 @@
 import React, { ReactNode, FunctionComponent, useContext } from "react";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
-import AppContext, { AppProvider, DisptachType, Types } from "context/AppContext";
+import { Hydrate } from "react-query/hydration";
+import AppContext, {
+    AppProvider,
+    DisptachType,
+    Types
+} from "context/AppContext";
 import GlobalStyles from "styles";
 import "../../public/tailwind.css";
 import "react-circular-progressbar/dist/styles.css";
@@ -9,7 +14,6 @@ import Sidebar from "components/Sidebar/Sidebar";
 import PageProps from "./indexTypes";
 import { useSwipeable, EventData } from "react-swipeable";
 // import { GlobalStyles } from 'twin.macro'
-
 
 const queryCache = new QueryCache();
 
@@ -30,7 +34,7 @@ const swipeHandler = (
     }
 };
 
-const App = ({Component, pageProps}: {Component: any, pageProps: any}) => {
+const App = ({ Component, pageProps }: { Component: any; pageProps: any }) => {
     const { dispatch } = useContext(AppContext);
 
     const handlers = useSwipeable({
@@ -39,20 +43,19 @@ const App = ({Component, pageProps}: {Component: any, pageProps: any}) => {
 
     return (
         <AppProvider>
-                <ReactQueryCacheProvider queryCache={queryCache}>
-                <StyledPageWrapper {...handlers}>
-            <Sidebar />
-            <StyledComponentWrapper>
-            <Component {...pageProps} />
-            </StyledComponentWrapper>
-        </StyledPageWrapper>
-                        
-                </ReactQueryCacheProvider>
-                <GlobalStyles />
+            <ReactQueryCacheProvider queryCache={queryCache}>
+                <Hydrate state={pageProps.dehydratedState}>
+                    <StyledPageWrapper {...handlers}>
+                        <Sidebar />
+                        <StyledComponentWrapper>
+                            <Component {...pageProps} />
+                        </StyledComponentWrapper>
+                    </StyledPageWrapper>
+                </Hydrate>
+            </ReactQueryCacheProvider>
+            <GlobalStyles />
         </AppProvider>
     );
 };
 
 export default App;
-
-

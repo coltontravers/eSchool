@@ -9,5 +9,6 @@ module.exports = {
         }
 
         return config;
-    }
+    },
+    pageExtensions: ["tsx", "js"]
 };

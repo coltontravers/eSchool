@@ -17,10 +17,10 @@ export const alignItems = {
 
 export const alignContent = {
     start: tw`content-start`,
-    center: "content-center",
-    end: "content-end",
-    spaceBetween: "content-between",
-    spaceAround: "content-around"
+    center: tw`content-center`,
+    end: tw`content-end`,
+    spaceBetween: tw`content-between`,
+    spaceAround: tw`content-around`
 };
 
 export const justify = {
