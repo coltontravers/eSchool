@@ -14,8 +14,6 @@ model classroom {
     grade   Int
     time    String
     grades  grade[]
-
-    @@map("class")
 }
 
 model grade {
@@ -39,7 +37,8 @@ model user {
 }
 
 model event {
-    id      Int   @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
+    name    String
     user_id Int?
-    user    user? @relation(fields: [user_id], references: [id])
+    user    user?  @relation(fields: [user_id], references: [id])
 }

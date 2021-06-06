@@ -3,8 +3,8 @@
  * Do not make changes to this file directly
  */
 
-import * as Context from "../../api/context"
 
+import { Context } from "./../../api/context"
 
 
 declare global {
@@ -19,6 +19,21 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  DateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  EventListRelationFilter: { // input type
+    every?: NexusGenInputs['eventWhereInput'] | null; // eventWhereInput
+    none?: NexusGenInputs['eventWhereInput'] | null; // eventWhereInput
+    some?: NexusGenInputs['eventWhereInput'] | null; // eventWhereInput
+  }
   GradeListRelationFilter: { // input type
     every?: NexusGenInputs['gradeWhereInput'] | null; // gradeWhereInput
     none?: NexusGenInputs['gradeWhereInput'] | null; // gradeWhereInput
@@ -43,6 +58,16 @@ export interface NexusGenInputs {
     lte?: number | null; // Int
     not?: NexusGenInputs['NestedIntNullableFilter'] | null; // NestedIntNullableFilter
     notIn?: number[] | null; // [Int!]
+  }
+  NestedDateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
   }
   NestedIntFilter: { // input type
     equals?: number | null; // Int
@@ -93,28 +118,80 @@ export interface NexusGenInputs {
   }
   classroomCreateInput: { // input type
     grade: number; // Int!
-    grades?: NexusGenInputs['gradeCreateManyWithoutClassroomInput'] | null; // gradeCreateManyWithoutClassroomInput
+    grades?: NexusGenInputs['gradeCreateNestedManyWithoutClassroomInput'] | null; // gradeCreateNestedManyWithoutClassroomInput
     name: string; // String!
     teacher: string; // String!
     time: string; // String!
   }
   classroomWhereInput: { // input type
     AND?: NexusGenInputs['classroomWhereInput'][] | null; // [classroomWhereInput!]
+    NOT?: NexusGenInputs['classroomWhereInput'][] | null; // [classroomWhereInput!]
+    OR?: NexusGenInputs['classroomWhereInput'][] | null; // [classroomWhereInput!]
     grade?: NexusGenInputs['IntFilter'] | null; // IntFilter
     grades?: NexusGenInputs['GradeListRelationFilter'] | null; // GradeListRelationFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['classroomWhereInput'][] | null; // [classroomWhereInput!]
-    OR?: NexusGenInputs['classroomWhereInput'][] | null; // [classroomWhereInput!]
     teacher?: NexusGenInputs['StringFilter'] | null; // StringFilter
     time?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   classroomWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
-  gradeCreateManyWithoutClassroomInput: { // input type
+  eventCreateInput: { // input type
+    name: string; // String!
+    user?: NexusGenInputs['userCreateNestedOneWithoutEventInput'] | null; // userCreateNestedOneWithoutEventInput
+  }
+  eventCreateManyUserInput: { // input type
+    id?: number | null; // Int
+    name: string; // String!
+  }
+  eventCreateManyUserInputEnvelope: { // input type
+    data?: NexusGenInputs['eventCreateManyUserInput'][] | null; // [eventCreateManyUserInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  eventCreateNestedManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['eventWhereUniqueInput'][] | null; // [eventWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['eventCreateOrConnectWithoutUserInput'][] | null; // [eventCreateOrConnectWithoutUserInput!]
+    create?: NexusGenInputs['eventCreateWithoutUserInput'][] | null; // [eventCreateWithoutUserInput!]
+    createMany?: NexusGenInputs['eventCreateManyUserInputEnvelope'] | null; // eventCreateManyUserInputEnvelope
+  }
+  eventCreateOrConnectWithoutUserInput: { // input type
+    create: NexusGenInputs['eventCreateWithoutUserInput']; // eventCreateWithoutUserInput!
+    where: NexusGenInputs['eventWhereUniqueInput']; // eventWhereUniqueInput!
+  }
+  eventCreateWithoutUserInput: { // input type
+    name: string; // String!
+  }
+  eventWhereInput: { // input type
+    AND?: NexusGenInputs['eventWhereInput'][] | null; // [eventWhereInput!]
+    NOT?: NexusGenInputs['eventWhereInput'][] | null; // [eventWhereInput!]
+    OR?: NexusGenInputs['eventWhereInput'][] | null; // [eventWhereInput!]
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    user?: NexusGenInputs['userWhereInput'] | null; // userWhereInput
+    user_id?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
+  }
+  eventWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  gradeCreateManyClassroomInput: { // input type
+    grade: number; // Int!
+    id?: number | null; // Int
+    name: string; // String!
+  }
+  gradeCreateManyClassroomInputEnvelope: { // input type
+    data?: NexusGenInputs['gradeCreateManyClassroomInput'][] | null; // [gradeCreateManyClassroomInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  gradeCreateNestedManyWithoutClassroomInput: { // input type
     connect?: NexusGenInputs['gradeWhereUniqueInput'][] | null; // [gradeWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['gradeCreateOrConnectWithoutClassroomInput'][] | null; // [gradeCreateOrConnectWithoutClassroomInput!]
     create?: NexusGenInputs['gradeCreateWithoutClassroomInput'][] | null; // [gradeCreateWithoutClassroomInput!]
+    createMany?: NexusGenInputs['gradeCreateManyClassroomInputEnvelope'] | null; // gradeCreateManyClassroomInputEnvelope
+  }
+  gradeCreateOrConnectWithoutClassroomInput: { // input type
+    create: NexusGenInputs['gradeCreateWithoutClassroomInput']; // gradeCreateWithoutClassroomInput!
+    where: NexusGenInputs['gradeWhereUniqueInput']; // gradeWhereUniqueInput!
   }
   gradeCreateWithoutClassroomInput: { // input type
     grade: number; // Int!
@@ -122,15 +199,61 @@ export interface NexusGenInputs {
   }
   gradeWhereInput: { // input type
     AND?: NexusGenInputs['gradeWhereInput'][] | null; // [gradeWhereInput!]
+    NOT?: NexusGenInputs['gradeWhereInput'][] | null; // [gradeWhereInput!]
+    OR?: NexusGenInputs['gradeWhereInput'][] | null; // [gradeWhereInput!]
     classroom?: NexusGenInputs['classroomWhereInput'] | null; // classroomWhereInput
     classroom_id?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
     grade?: NexusGenInputs['IntFilter'] | null; // IntFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['gradeWhereInput'][] | null; // [gradeWhereInput!]
-    OR?: NexusGenInputs['gradeWhereInput'][] | null; // [gradeWhereInput!]
   }
   gradeWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  userCreateInput: { // input type
+    apiToken: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    email: string; // String!
+    event?: NexusGenInputs['eventCreateNestedManyWithoutUserInput'] | null; // eventCreateNestedManyWithoutUserInput
+    familyName: string; // String!
+    givenName: string; // String!
+    password: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  userCreateNestedOneWithoutEventInput: { // input type
+    connect?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['userCreateOrConnectWithoutEventInput'] | null; // userCreateOrConnectWithoutEventInput
+    create?: NexusGenInputs['userCreateWithoutEventInput'] | null; // userCreateWithoutEventInput
+  }
+  userCreateOrConnectWithoutEventInput: { // input type
+    create: NexusGenInputs['userCreateWithoutEventInput']; // userCreateWithoutEventInput!
+    where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!
+  }
+  userCreateWithoutEventInput: { // input type
+    apiToken: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    email: string; // String!
+    familyName: string; // String!
+    givenName: string; // String!
+    password: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  userWhereInput: { // input type
+    AND?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    NOT?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    OR?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    apiToken?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    email?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    event?: NexusGenInputs['EventListRelationFilter'] | null; // EventListRelationFilter
+    familyName?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    givenName?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    password?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  userWhereUniqueInput: { // input type
+    email?: string | null; // String
     id?: number | null; // Int
   }
 }
@@ -145,9 +268,10 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
-export interface NexusGenRootTypes {
+export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   classroom: { // root type
@@ -159,40 +283,38 @@ export interface NexusGenRootTypes {
   }
   event: { // root type
     id: number; // Int!
+    name: string; // String!
     user_id?: number | null; // Int
+  }
+  user: { // root type
+    email: string; // String!
+    id: number; // Int!
   }
 }
 
-export interface NexusGenAllTypes extends NexusGenRootTypes {
-  GradeListRelationFilter: NexusGenInputs['GradeListRelationFilter'];
-  IntFilter: NexusGenInputs['IntFilter'];
-  IntNullableFilter: NexusGenInputs['IntNullableFilter'];
-  NestedIntFilter: NexusGenInputs['NestedIntFilter'];
-  NestedIntNullableFilter: NexusGenInputs['NestedIntNullableFilter'];
-  NestedStringFilter: NexusGenInputs['NestedStringFilter'];
-  StringFilter: NexusGenInputs['StringFilter'];
-  classroomCreateInput: NexusGenInputs['classroomCreateInput'];
-  classroomWhereInput: NexusGenInputs['classroomWhereInput'];
-  classroomWhereUniqueInput: NexusGenInputs['classroomWhereUniqueInput'];
-  gradeCreateManyWithoutClassroomInput: NexusGenInputs['gradeCreateManyWithoutClassroomInput'];
-  gradeCreateWithoutClassroomInput: NexusGenInputs['gradeCreateWithoutClassroomInput'];
-  gradeWhereInput: NexusGenInputs['gradeWhereInput'];
-  gradeWhereUniqueInput: NexusGenInputs['gradeWhereUniqueInput'];
-  QueryMode: NexusGenEnums['QueryMode'];
-  String: NexusGenScalars['String'];
-  Int: NexusGenScalars['Int'];
-  Float: NexusGenScalars['Float'];
-  Boolean: NexusGenScalars['Boolean'];
-  ID: NexusGenScalars['ID'];
+export interface NexusGenInterfaces {
 }
+
+export interface NexusGenUnions {
+}
+
+export type NexusGenRootTypes = NexusGenObjects
+
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOneclassroom: NexusGenRootTypes['classroom']; // classroom!
+    createOneevent: NexusGenRootTypes['event']; // event!
+    createOneuser: NexusGenRootTypes['user']; // user!
   }
   Query: { // field return type
     classroom: NexusGenRootTypes['classroom'] | null; // classroom
     classrooms: NexusGenRootTypes['classroom'][]; // [classroom!]!
+    event: NexusGenRootTypes['event'] | null; // event
+    events: NexusGenRootTypes['event'][]; // [event!]!
+    user: NexusGenRootTypes['user'] | null; // user
+    users: NexusGenRootTypes['user'][]; // [user!]!
   }
   classroom: { // field return type
     grade: number; // Int!
@@ -203,7 +325,44 @@ export interface NexusGenFieldTypes {
   }
   event: { // field return type
     id: number; // Int!
+    name: string; // String!
     user_id: number | null; // Int
+  }
+  user: { // field return type
+    email: string; // String!
+    id: number; // Int!
+  }
+}
+
+export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    createOneclassroom: 'classroom'
+    createOneevent: 'event'
+    createOneuser: 'user'
+  }
+  Query: { // field return type name
+    classroom: 'classroom'
+    classrooms: 'classroom'
+    event: 'event'
+    events: 'event'
+    user: 'user'
+    users: 'user'
+  }
+  classroom: { // field return type name
+    grade: 'Int'
+    id: 'Int'
+    name: 'String'
+    teacher: 'String'
+    time: 'String'
+  }
+  event: { // field return type name
+    id: 'Int'
+    name: 'String'
+    user_id: 'Int'
+  }
+  user: { // field return type name
+    email: 'String'
+    id: 'Int'
   }
 }
 
@@ -211,6 +370,12 @@ export interface NexusGenArgTypes {
   Mutation: {
     createOneclassroom: { // args
       data: NexusGenInputs['classroomCreateInput']; // classroomCreateInput!
+    }
+    createOneevent: { // args
+      data: NexusGenInputs['eventCreateInput']; // eventCreateInput!
+    }
+    createOneuser: { // args
+      data: NexusGenInputs['userCreateInput']; // userCreateInput!
     }
   }
   Query: {
@@ -224,34 +389,69 @@ export interface NexusGenArgTypes {
       last?: number | null; // Int
       where?: NexusGenInputs['classroomWhereInput'] | null; // classroomWhereInput
     }
+    event: { // args
+      where: NexusGenInputs['eventWhereUniqueInput']; // eventWhereUniqueInput!
+    }
+    events: { // args
+      after?: NexusGenInputs['eventWhereUniqueInput'] | null; // eventWhereUniqueInput
+      before?: NexusGenInputs['eventWhereUniqueInput'] | null; // eventWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      where?: NexusGenInputs['eventWhereInput'] | null; // eventWhereInput
+    }
+    user: { // args
+      where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!
+    }
+    users: { // args
+      after?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+      before?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      where?: NexusGenInputs['userWhereInput'] | null; // userWhereInput
+    }
   }
 }
 
-export interface NexusGenAbstractResolveReturnTypes {
+export interface NexusGenAbstractTypeMembers {
 }
 
-export interface NexusGenInheritedFields {}
+export interface NexusGenTypeInterfaces {
+}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "classroom" | "event";
+export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = "GradeListRelationFilter" | "IntFilter" | "IntNullableFilter" | "NestedIntFilter" | "NestedIntNullableFilter" | "NestedStringFilter" | "StringFilter" | "classroomCreateInput" | "classroomWhereInput" | "classroomWhereUniqueInput" | "gradeCreateManyWithoutClassroomInput" | "gradeCreateWithoutClassroomInput" | "gradeWhereInput" | "gradeWhereUniqueInput";
+export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = "QueryMode";
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = keyof NexusGenScalars;
 
 export type NexusGenUnionNames = never;
 
+export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
+
+export type NexusGenAbstractsUsingStrategyResolveType = never;
+
+export type NexusGenFeaturesConfig = {
+  abstractTypeStrategies: {
+    isTypeOf: false
+    resolveType: true
+    __typename: false
+  }
+}
+
 export interface NexusGenTypes {
-  context: Context.Context;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
+  inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
   argTypes: NexusGenArgTypes;
   fieldTypes: NexusGenFieldTypes;
+  fieldTypeNames: NexusGenFieldTypeNames;
   allTypes: NexusGenAllTypes;
-  inheritedFields: NexusGenInheritedFields;
+  typeInterfaces: NexusGenTypeInterfaces;
   objectNames: NexusGenObjectNames;
   inputNames: NexusGenInputNames;
   enumNames: NexusGenEnumNames;
@@ -262,7 +462,10 @@ export interface NexusGenTypes {
   allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
   allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
-  abstractResolveReturn: NexusGenAbstractResolveReturnTypes;
+  abstractTypeMembers: NexusGenAbstractTypeMembers;
+  objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
+  abstractsUsingStrategyResolveType: NexusGenAbstractsUsingStrategyResolveType;
+  features: NexusGenFeaturesConfig;
 }
 
 
@@ -271,6 +474,10 @@ declare global {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
   }
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+  }
   interface NexusGenPluginSchemaConfig {
+  }
+  interface NexusGenPluginArgConfig {
   }
 }

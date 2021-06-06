@@ -2,72 +2,29 @@
 ### Do not make changes to this file directly
 
 
-type classroom {
-  grade: Int!
-  id: Int!
-  name: String!
-  teacher: String!
-  time: String!
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
 }
 
-input classroomCreateInput {
-  grade: Int!
-  grades: gradeCreateManyWithoutClassroomInput
-  name: String!
-  teacher: String!
-  time: String!
-}
-
-input classroomWhereInput {
-  AND: [classroomWhereInput!]
-  grade: IntFilter
-  grades: GradeListRelationFilter
-  id: IntFilter
-  name: StringFilter
-  NOT: [classroomWhereInput!]
-  OR: [classroomWhereInput!]
-  teacher: StringFilter
-  time: StringFilter
-}
-
-input classroomWhereUniqueInput {
-  id: Int
-}
-
-type event {
-  id: Int!
-  user_id: Int
-}
-
-input gradeCreateManyWithoutClassroomInput {
-  connect: [gradeWhereUniqueInput!]
-  create: [gradeCreateWithoutClassroomInput!]
-}
-
-input gradeCreateWithoutClassroomInput {
-  grade: Int!
-  name: String!
+input EventListRelationFilter {
+  every: eventWhereInput
+  none: eventWhereInput
+  some: eventWhereInput
 }
 
 input GradeListRelationFilter {
   every: gradeWhereInput
   none: gradeWhereInput
   some: gradeWhereInput
-}
-
-input gradeWhereInput {
-  AND: [gradeWhereInput!]
-  classroom: classroomWhereInput
-  classroom_id: IntNullableFilter
-  grade: IntFilter
-  id: IntFilter
-  name: StringFilter
-  NOT: [gradeWhereInput!]
-  OR: [gradeWhereInput!]
-}
-
-input gradeWhereUniqueInput {
-  id: Int
 }
 
 input IntFilter {
@@ -94,6 +51,19 @@ input IntNullableFilter {
 
 type Mutation {
   createOneclassroom(data: classroomCreateInput!): classroom!
+  createOneevent(data: eventCreateInput!): event!
+  createOneuser(data: userCreateInput!): user!
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
 }
 
 input NestedIntFilter {
@@ -135,6 +105,10 @@ input NestedStringFilter {
 type Query {
   classroom(where: classroomWhereUniqueInput!): classroom
   classrooms(after: classroomWhereUniqueInput, before: classroomWhereUniqueInput, first: Int, last: Int, where: classroomWhereInput): [classroom!]!
+  event(where: eventWhereUniqueInput!): event
+  events(after: eventWhereUniqueInput, before: eventWhereUniqueInput, first: Int, last: Int, where: eventWhereInput): [event!]!
+  user(where: userWhereUniqueInput!): user
+  users(after: userWhereUniqueInput, before: userWhereUniqueInput, first: Int, last: Int, where: userWhereInput): [user!]!
 }
 
 enum QueryMode {
@@ -155,4 +129,187 @@ input StringFilter {
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
+}
+
+type classroom {
+  grade: Int!
+  id: Int!
+  name: String!
+  teacher: String!
+  time: String!
+}
+
+input classroomCreateInput {
+  grade: Int!
+  grades: gradeCreateNestedManyWithoutClassroomInput
+  name: String!
+  teacher: String!
+  time: String!
+}
+
+input classroomWhereInput {
+  AND: [classroomWhereInput!]
+  NOT: [classroomWhereInput!]
+  OR: [classroomWhereInput!]
+  grade: IntFilter
+  grades: GradeListRelationFilter
+  id: IntFilter
+  name: StringFilter
+  teacher: StringFilter
+  time: StringFilter
+}
+
+input classroomWhereUniqueInput {
+  id: Int
+}
+
+type event {
+  id: Int!
+  name: String!
+  user_id: Int
+}
+
+input eventCreateInput {
+  name: String!
+  user: userCreateNestedOneWithoutEventInput
+}
+
+input eventCreateManyUserInput {
+  id: Int
+  name: String!
+}
+
+input eventCreateManyUserInputEnvelope {
+  data: [eventCreateManyUserInput!]
+  skipDuplicates: Boolean
+}
+
+input eventCreateNestedManyWithoutUserInput {
+  connect: [eventWhereUniqueInput!]
+  connectOrCreate: [eventCreateOrConnectWithoutUserInput!]
+  create: [eventCreateWithoutUserInput!]
+  createMany: eventCreateManyUserInputEnvelope
+}
+
+input eventCreateOrConnectWithoutUserInput {
+  create: eventCreateWithoutUserInput!
+  where: eventWhereUniqueInput!
+}
+
+input eventCreateWithoutUserInput {
+  name: String!
+}
+
+input eventWhereInput {
+  AND: [eventWhereInput!]
+  NOT: [eventWhereInput!]
+  OR: [eventWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  user: userWhereInput
+  user_id: IntNullableFilter
+}
+
+input eventWhereUniqueInput {
+  id: Int
+}
+
+input gradeCreateManyClassroomInput {
+  grade: Int!
+  id: Int
+  name: String!
+}
+
+input gradeCreateManyClassroomInputEnvelope {
+  data: [gradeCreateManyClassroomInput!]
+  skipDuplicates: Boolean
+}
+
+input gradeCreateNestedManyWithoutClassroomInput {
+  connect: [gradeWhereUniqueInput!]
+  connectOrCreate: [gradeCreateOrConnectWithoutClassroomInput!]
+  create: [gradeCreateWithoutClassroomInput!]
+  createMany: gradeCreateManyClassroomInputEnvelope
+}
+
+input gradeCreateOrConnectWithoutClassroomInput {
+  create: gradeCreateWithoutClassroomInput!
+  where: gradeWhereUniqueInput!
+}
+
+input gradeCreateWithoutClassroomInput {
+  grade: Int!
+  name: String!
+}
+
+input gradeWhereInput {
+  AND: [gradeWhereInput!]
+  NOT: [gradeWhereInput!]
+  OR: [gradeWhereInput!]
+  classroom: classroomWhereInput
+  classroom_id: IntNullableFilter
+  grade: IntFilter
+  id: IntFilter
+  name: StringFilter
+}
+
+input gradeWhereUniqueInput {
+  id: Int
+}
+
+type user {
+  email: String!
+  id: Int!
+}
+
+input userCreateInput {
+  apiToken: String!
+  createdAt: DateTime
+  email: String!
+  event: eventCreateNestedManyWithoutUserInput
+  familyName: String!
+  givenName: String!
+  password: String!
+  updatedAt: DateTime
+}
+
+input userCreateNestedOneWithoutEventInput {
+  connect: userWhereUniqueInput
+  connectOrCreate: userCreateOrConnectWithoutEventInput
+  create: userCreateWithoutEventInput
+}
+
+input userCreateOrConnectWithoutEventInput {
+  create: userCreateWithoutEventInput!
+  where: userWhereUniqueInput!
+}
+
+input userCreateWithoutEventInput {
+  apiToken: String!
+  createdAt: DateTime
+  email: String!
+  familyName: String!
+  givenName: String!
+  password: String!
+  updatedAt: DateTime
+}
+
+input userWhereInput {
+  AND: [userWhereInput!]
+  NOT: [userWhereInput!]
+  OR: [userWhereInput!]
+  apiToken: StringFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  event: EventListRelationFilter
+  familyName: StringFilter
+  givenName: StringFilter
+  id: IntFilter
+  password: StringFilter
+  updatedAt: DateTimeFilter
+}
+
+input userWhereUniqueInput {
+  email: String
+  id: Int
 }
