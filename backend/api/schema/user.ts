@@ -1,4 +1,4 @@
-import { extendType, mutationType } from "nexus";
+import { extendType } from "nexus";
 
 export const UserQuery = extendType({
     type: "Query",
